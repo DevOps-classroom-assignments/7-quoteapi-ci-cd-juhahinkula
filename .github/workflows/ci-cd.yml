@@ -16,7 +16,3 @@ jobs:
         run: npm run lint
       - name: Run tests
         run: npm run test
-
-  Deployment:
-    needs: CI-pipeline
-    runs-on: ubuntu-latest
