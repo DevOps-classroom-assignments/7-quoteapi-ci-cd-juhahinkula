@@ -3,8 +3,10 @@ name: CI/CD pipeline
 on: 
   push:
     branches: [main]
+    tags: ['v*']
   pull_request:
     branches: [main]
+
 
 jobs:
   CI-pipeline:
@@ -22,9 +24,10 @@ jobs:
   Deployment:
     needs: CI-pipeline
     runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
     steps:
       - name: Deploy
         env:
           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         run: |
-          curl "$deploy_url"   
+          curl "$deploy_url"
